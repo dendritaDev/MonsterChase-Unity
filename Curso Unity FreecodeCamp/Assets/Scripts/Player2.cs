@@ -25,7 +25,10 @@ public class Player2 : MonoBehaviour
     private SpriteRenderer sr2;
     private Animator anim2;
     private string WALK_ANIMATION2 = "Player2-Walk";
-    
+    private string GROUND_TAG2 = "Ground";
+
+    private bool isGroundedP2;
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +47,7 @@ public class Player2 : MonoBehaviour
     {
         PlayerMoveKeyBoard2();
         AnimatePlaeyer2();
+        PlayerJump2();
     }
 
     void PlayerMoveKeyBoard2()
@@ -80,6 +84,23 @@ public class Player2 : MonoBehaviour
         
     }
 
+    void PlayerJump2()
+    {
+        if ( Input.GetButton("Jump") && isGroundedP2)
+        {
+            myBody2.AddForce(new Vector2(0f, jumpForce2), ForceMode2D.Impulse); 
+            isGroundedP2 = false;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag(GROUND_TAG2))
+        {
+            isGroundedP2 = true;
+            
+        }
+    }
 
 
 }
