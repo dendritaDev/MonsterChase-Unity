@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    [HideInInspector] //esto es que escondamos la variable en la interfaz de unity, esto lo hacemos pq la necesitamos q sea publica pero no queremos que se vea
-    public float speed;
 
+    [SerializeField] //esto es que escondamos la variable en la interfaz de unity, esto lo hacemos pq la necesitamos q sea publica pero no queremos que se vea
+    public int speed;
     private Rigidbody2D myBody;
 
     // Start is called before the first frame update
@@ -14,7 +14,7 @@ public class Monster : MonoBehaviour
     {
         myBody = GetComponent<Rigidbody2D>();
 
-        speed = 7;
+      
     }
 
     // Update is called once per frame
