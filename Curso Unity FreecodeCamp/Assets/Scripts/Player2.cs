@@ -26,6 +26,7 @@ public class Player2 : MonoBehaviour
     private Animator anim2;
     private string WALK_ANIMATION2 = "Player2-Walk";
     private string GROUND_TAG2 = "Ground";
+    private string ENEMY_TAG2 = "Enemy";
 
     private bool isGroundedP2;
 
@@ -52,29 +53,23 @@ public class Player2 : MonoBehaviour
 
     void PlayerMoveKeyBoard2()
     {
-        movementX2 = Input.GetAxisRaw("Horizontal"); //GetAxis hace una variacion mas pequeña: 0, 0.2, 0.4, 0.6... Meintras que para variaciones mas grandes es mejor GetAxisRaw
-        //"Horizontal" funcionará para: Tecla D y para la Flecha de la derecha (positivamente), mientras que Tecla A y flecha izquierda (negativamente)
-
-        //movementX podrá ser 3 valores: -1(cuando vamos a la izquierda), 0 (cuando el perosnaje está quieto), 1(cuando vamos a la derecha). 
+        movementX2 = Input.GetAxisRaw("Horizontal");
 
         transform.position += new Vector3(movementX2, 0f, 0f) * Time.deltaTime * moveForce2;
 
-        //Time.deltaTime: Si no lo multiplicasemos por deltatime se moveria MUCHISIMO. Deltatime es el tiempo que ha pasado desde el ultimo frame. Un valor muy pequeño con lo que disminuye mucho la cantidad de lo que se le suma
-        //Despues lo multiplicamos por moveForce para aumentar esta cantidad por lo que nos interese.
-        
     }
 
     void AnimatePlaeyer2()
     {
-        if(movementX2 < 0) //moviéndo a la derecha
+        if(movementX2 < 0) 
         {
-            anim2.SetBool(WALK_ANIMATION2, true); //aqui hacemos que el bool de anim que definimos en la animacion walk sea true y por tanto se active la animacion
-            sr2.flipX = true; //para que mire a la izquierda y no camine de espaldas
+            anim2.SetBool(WALK_ANIMATION2, true); 
+            sr2.flipX = true; 
         }
-        else if (movementX2 > 0) //moviendo a la izquierda
+        else if (movementX2 > 0) 
         {
             anim2.SetBool(WALK_ANIMATION2, true);
-            sr2.flipX = false; //vuelva a mirar a la derecha
+            sr2.flipX = false; 
 
         }
         else //estamos quietos
@@ -96,11 +91,23 @@ public class Player2 : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag(GROUND_TAG2))
-        {
             isGroundedP2 = true;
             
-        }
+        
+
+        if (collision.gameObject.CompareTag(ENEMY_TAG2))
+            Destroy(gameObject); 
+        
+
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (collision.CompareTag(ENEMY_TAG2)) 
+            Destroy(gameObject);
+        
+
+    }
 
 }

@@ -33,7 +33,8 @@ public class MonsterSpawner : MonoBehaviour
             randomIndex = Random.Range(0, monsterReference.Length);
             randomSide = Random.Range(0, 2);
 
-            spawnedMonster = Instantiate(monsterReference[randomIndex]);
+            spawnedMonster = Instantiate(monsterReference[randomIndex]); //Instantiate: can be used to create new objects at runtime. An existing object that you want to make a copy of.
+                                                                         //Clones the object original and returns the clone.
 
             // left side
             if (randomSide == 0)

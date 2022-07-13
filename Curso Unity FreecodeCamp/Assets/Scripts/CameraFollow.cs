@@ -21,6 +21,11 @@ public class CameraFollow : MonoBehaviour
     void LateUpdate() //como queremos que el seguimiento de la camara se de despues del update del player, lo ponemos en lo que se llama lateupdate, que sería como un update pero que se da despues de que todos los updates se hayan dado. 
         //es decir el lateupdate se da despues de que se hayan hecho todos los calculos habidos en update: p.e la posicion del player ya se haya recalculado
     {
+        
+        if(!player) //if player == null
+        {
+            return;
+        }
         tempPos = transform.position; //Le asignamos a tempPos la posicion de la camara
         tempPos.x = player.position.x;//le damos al eje X de tempPos la posicion x del player
 

@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     private Animator anim;
     private string WALK_ANIMATION = "Walk";
     private string GROUND_TAG = "Ground";
+    private string ENEMY_TAG = "Enemy";
 
     private bool isGrounded;
     
@@ -103,13 +104,34 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) //esto sno permite detectar colisiones entre 2 objetos
+    private void OnCollisionEnter2D(Collision2D collision) //esto sno permite detectar colisiones entre 2 objetos. "collision" seria el gameobject con el que colisioanmos con toda su informacion
     {
         if(collision.gameObject.CompareTag(GROUND_TAG))
         {
             isGrounded = true;
             Debug.Log("We landed on ground");
         }
+
+        if(collision.gameObject.CompareTag(ENEMY_TAG))
+        {
+            Destroy(gameObject); //este gameobject no es el que nos pasan sino el de este script, e sdecir el de player
+        }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)//esto es como collision pero cuando tienen trigger acticvado en el box collider. Esto es pa los fantasmas pq se supone que son incorporeos y el trigger
+        //no desplazaria al player al chocar ni nda, es solo un trigger que se da pero sin haber colision como tal. Por eso mismo, como tiene trigger no se choca contra los enemigos pq tiene trigger y no colision,
+        //es como si fuera algo sin ser solido.
+
+        //Si queremos que los fantasmas si que chocasen con los zombies, tendriamos que en cualquier gameobject de la interfaz seleccionar layers y crear uno nuevo que se llame Enemy.
+        //Vamos a Edit, project settigns y a physics 2d. Veremos todos los layers que hay y como interaccionan entre si. Si le damos chech a enemy con enemy, si que chocarían. 
+        //le damos el tag a todo y hacemos q no choquen entre ellos
+    {
+
+        if(collision.CompareTag(ENEMY_TAG)) //aqui no hace falta poner el gameObject detras de compareTag.
+        {
+            Destroy(gameObject);
+        }
+        
+    } //Para poder deterctar colisiones/trigger, es necesarioq ue uno de los dos objetos tengan un rigidbody de componente
 
 }
