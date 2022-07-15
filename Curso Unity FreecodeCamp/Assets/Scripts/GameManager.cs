@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -32,16 +33,21 @@ public class GameManager : MonoBehaviour
         }
            
     }
-
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable() 
     {
-        
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
+
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
+        if(scene.name == "GamePlay")
+        {
+            Instantiate(characters[CharIndex]);
+        }
     }
 }
